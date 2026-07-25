@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 20th Birthday Hrishita! 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#0c0316;
+    --bg-2:#1a0a30;
+    --bg-3:#2b0f4d;
+    --pink-1:#ff6fb0;
+    --pink-2:#ff2e8f;
+    --purple-1:#a855f7;
+    --purple-2:#7c3aed;
+    --gold:#ffd76e;
+    --text-light:#f6ecff;
+    --text-dim:#c9b8e8;
+    --bot-blue:#3fa9f5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins',sans-serif;
+    background:
+        linear-gradient(rgba(12,3,22,.60), rgba(12,3,22,.70)),
+        url("https://i.pinimg.com/736x/a0/f7/ba/a0f7baf33a9549f2ad98e86e4f3a1ec4.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:scroll;
+
+    color:var(--text-light);
+    min-height:100vh;
+    overflow:hidden;
+    position:relative;
+}
+  .blob{
+    position:fixed;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.08;
+    z-index:0;
+    animation:float 12s ease-in-out infinite;
+}
+  .blob1{width:300px;height:300px;background:var(--pink-2);top:-100px;left:-80px;}
+  .blob2{width:340px;height:340px;background:var(--purple-2);bottom:-120px;right:-90px;animation-delay:2s;}
+  .blob3{width:220px;height:220px;background:var(--gold);top:45%;left:75%;animation-delay:4s;opacity:.18;}
+  @keyframes float{0%,100%{transform:translateY(0) translateX(0);}50%{transform:translateY(-30px) translateX(20px);}}
+
+  canvas#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:80;}
+
+  .screen{
+    position:relative;
+    z-index:2;
+   height:100vh;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:18px 15px;
+  }
+  .screen.active{ display:flex; animation:fadeIn .6s ease; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+
+  .eyebrow{font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--pink-1);opacity:.9;margin-bottom:16px;font-weight:600;}
+  h1{
+    font-family:'Baloo 2',cursive;
+    font-size:clamp(2rem,11vw,3rem);
+    background:linear-gradient(120deg,#fff,var(--pink-1) 55%,var(--purple-1));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 40px rgba(168,85,247,.35);
+    line-height:1.08;
+  }
+
+  .continue-btn{
+    margin-top:28px;
+    border:1px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.06);
+    color:var(--text-light);
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:.95rem;
+    padding:12px 30px;
+    border-radius:999px;
+    cursor:pointer;
+    backdrop-filter:blur(6px);
+    transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow:0 0 0 rgba(255,111,176,0);
+  }
+  .continue-btn:hover{
+    transform:translateY(-2px);
+    background:linear-gradient(120deg,var(--pink-2),var(--purple-2));
+    box-shadow:0 10px 30px rgba(255,46,143,.35);
+  }
+
+  h2.page-title{
+    font-family:'Baloo 2',cursive;
+    font-size:clamp(1.6rem,5vw,2.6rem);
+    color:#fff;
+    text-shadow:0 0 30px rgba(168,85,247,.4);
+    margin-bottom:10px;
+  }
+
+  .counter{
+    margin-top:20px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.18);
+    padding:8px 18px;
+    border-radius:999px;
+    color:var(--text-light);
+    font-weight:600;
+    font-size:.9rem;
+    backdrop-filter:blur(6px);
+  }
+
+  /* MASCOT */
+  .stage{ position:relative; margin:30px auto 6px; width:min(220px,65vw); }
+  .bot{
+    width:100%; height:auto; display:block; cursor:pointer;
+    transition:transform .15s ease;
+    filter:drop-shadow(0 0 26px rgba(255,111,176,.35)) drop-shadow(0 18px 24px rgba(0,0,0,.55));
+  }
+  .bot:hover{transform:scale(1.02);}
+  .bot:active{transform:scale(.98);}
+  .bot.shake{ animation:shake .4s ease; }
+  @keyframes shake{0%,100%{transform:rotate(0);}25%{transform:rotate(-3deg);}75%{transform:rotate(3deg);}}
+
+  .tap-hint{
+    margin-top:6px;
+    font-size:.85rem;
+    color:var(--text-light);
+    background:rgba(255,255,255,.06);
+    display:inline-block;
+    padding:7px 16px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(6px);
+  }
+
+  .envelope-zone{ position:relative; height:0; }
+  .envelope{
+    position:absolute; left:50%; bottom:0;
+    transform:translate(-50%, 0) scale(0.3);
+    opacity:0; width:150px; cursor:pointer;
+    transition:transform .45s cubic-bezier(.2,.9,.3,1.2), opacity .3s ease;
+    z-index:10;
+  }
+  .envelope.show{ transform:translate(-50%, -120px) scale(1); opacity:1; }
+  .envelope svg{ width:100%; display:block; filter:drop-shadow(0 10px 20px rgba(0,0,0,.5)); }
+  .envelope .open-hint{ text-align:center; color:var(--text-light); font-size:.72rem; margin-top:4px; font-weight:600; letter-spacing:.03em; }
+
+  .letter-overlay{
+    position:fixed; inset:0;
+    background:rgba(5,0,15,.7);
+    backdrop-filter:blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    z-index:100; opacity:0; pointer-events:none;
+    transition:opacity .25s ease; padding:20px;
+  }
+  .letter-overlay.active{opacity:1;pointer-events:auto;}
+  .letter-card{
+    background:linear-gradient(160deg,#fffdf5,#ffe9d2);
+    border:1px solid rgba(255,111,176,.35);
+    border-radius:20px;
+    max-width:92%; width:100%;
+    padding:32px 26px;
+    text-align:center;
+    box-shadow:0 0 60px rgba(168,85,247,.35), 0 30px 60px rgba(0,0,0,.6);
+    position:relative;
+    transform:scale(.85) translateY(20px);
+    transition:transform .3s cubic-bezier(.2,.9,.3,1.2);
+  }
+  .letter-overlay.active .letter-card{ transform:scale(1) translateY(0); }
+  .letter-card{
+    background:linear-gradient(160deg,#fff9ef,#ffe7c2);
+    border:2px solid #ffb347;
+    box-shadow:
+        0 0 40px rgba(255,183,71,.4),
+        0 20px 40px rgba(0,0,0,.35);
+}
+ .letter-card .msg{
+    color:#3d2b1f;
+    font-size:1.08rem;
+
+ }
+  .letter-card .close-btn{
+    margin-top:24px; border:none;
+    background:linear-gradient(120deg,var(--pink-2),var(--purple-2));
+    color:#fff; font-family:'Poppins',sans-serif; font-weight:600; font-size:.9rem;
+    padding:10px 26px; border-radius:999px; cursor:pointer;
+    box-shadow:0 8px 24px rgba(168,85,247,.45);
+  }
+  .letter-card .close-btn:hover{ filter:brightness(1.1); }
+
+  .final-msg{
+    max-width:520px;
+    font-size:clamp(1.05rem,3vw,1.3rem);
+    line-height:1.7;
+    color:var(--text-light);
+    font-weight:500;
+  }
+
+  .revisit{ margin-top:56px; }
+  .revisit h3{
+    font-family:'Baloo 2',cursive;
+    color:#fff;
+    font-size:clamp(1.2rem,3vw,1.6rem);
+    text-shadow:0 0 20px rgba(168,85,247,.4);
+    margin-bottom:14px;
+  }
+  .dots{ display:flex; flex-wrap:wrap; justify-content:center; gap:9px; max-width:460px; margin:0 auto; }
+  .dot{
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);
+    color:var(--text-light); font-size:.75rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:transform .15s ease, background .2s ease;
+  }
+  .dot.unlocked{ background:linear-gradient(140deg,var(--pink-1),var(--purple-1)); color:#fff; }
+  .dot:not(.unlocked){ cursor:default; opacity:.4; }
+  .dot.unlocked:hover{ transform:scale(1.12); }
+
+  .heart{ display:inline-block; animation:pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.25);}}
+
+  .note{ margin-top:26px; font-size:.7rem; color:var(--text-dim); opacity:.7; }
+.floating-photo{
+    position:fixed;
+    z-index:1;
+    pointer-events:none;
+}
+
+.floating-photo img{
+    width:80px;
+    height:80px;
+}
+
+/* Starting positions */
+.fp1{
+    top:5%;
+    left:5%;
+    animation:float1 18s linear infinite alternate;
+}
+
+.fp2{
+    top:55%;
+    right:5%;
+    animation:float2 22s linear infinite alternate;
+}
+
+.fp3{
+    bottom:5%;
+    left:40%;
+    animation:float3 20s linear infinite alternate;
+}
+
+@keyframes float1{
+    from{transform:translate(0,0) rotate(-8deg);}
+    to{transform:translate(70vw,65vh) rotate(15deg);}
+}
+
+@keyframes float2{
+    from{transform:translate(0,0) rotate(8deg);}
+    to{transform:translate(-65vw,-60vh) rotate(-15deg);}
+}
+
+@keyframes float3{
+    from{transform:translate(0,0) rotate(-5deg);}
+    to{transform:translate(50vw,-70vh) rotate(12deg);}
+}  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+@media (max-width:768px){
+
+.screen{
+    height:100vh;
+    padding:20px 15px;
+}
+
+h1{
+    font-size:2.3rem;
+}
+
+.page-title{
+    font-size:1.5rem;
+}
+
+.stage{
+    width:220px !important;
+}
+
+.floating-photo img{
+    width:90px;
+    height:90px;
+}
+
+.fp1{
+    top:4%;
+    left:-20px;
+}
+
+.fp2{
+    top:8%;
+    right:-20px;
+}
+
+.fp3{
+    bottom:5%;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.letter-card{
+    width:92%;
+    max-width:340px;
+}
+
+.close-btn{
+    width:100%;
+}
+
+.continue-btn{
+    width:90%;
+}
+
+}
+</style>
+</head>
+<body>
+<audio id="bgMusic" loop>
+    <source src="music/perfect.mp3" type="audio/mpeg">
+</audio>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+<div class="blob blob3"></div>
+<canvas id="confetti"></canvas>
+<div class="floating-photo fp1">
+    <img src="img1.jpeg">
+</div>
+
+<div class="floating-photo fp2">
+    <img src="img2.jpeg">
+</div>
+
+<div class="floating-photo fp3">
+    <img src="img3.jpeg">
+</div>
+
+<!-- SCREEN 1: HERO -->
+<section class="screen active" id="screen-hero">
+  <div class="eyebrow">A Little Birthday Surprise</div>
+  <h1>Happy Birthday, Hrishita!</h1>
+  <button class="continue-btn" id="continueBtn">Tap to continue ✨</button>
+</section>
+
+<!-- SCREEN 2: LETTERS -->
+<section class="screen" id="screen-letters">
+  <h2 class="page-title">Here are 20 letters for your 20th birthday</h2>
+  <div class="counter" id="counter">Letters left in the pocket: <span id="countNum">20</span></div>
+
+  <div class="stage">
+    <svg class="bot" id="botSvg" viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bodyGrad" cx="38%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#6cc4ff"/>
+          <stop offset="60%" stop-color="#3fa9f5"/>
+          <stop offset="100%" stop-color="#2f8fe0"/>
+        </radialGradient>
+        <radialGradient id="bellyGrad" cx="45%" cy="30%" r="80%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="100%" stop-color="#fdf1fa"/>
+        </radialGradient>
+        <radialGradient id="cheekGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ff9ecb" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="#ff9ecb" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <ellipse cx="150" cy="325" rx="90" ry="12" fill="#000000" opacity="0.35"/>
+
+      <path d="M150 42 C150 22 150 10 150 4" stroke="#20122f" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M150 4 l6 9 l-6 4 l-6 -4 Z" fill="#ff9ecb" stroke="#20122f" stroke-width="2" stroke-linejoin="round"/>
+
+      <ellipse cx="102" cy="58" rx="24" ry="27" fill="#ffffff"/>
+      <ellipse cx="198" cy="58" rx="24" ry="27" fill="#ffffff"/>
+      <ellipse cx="102" cy="61" rx="13" ry="16" fill="#ffc2de"/>
+      <ellipse cx="198" cy="61" rx="13" ry="16" fill="#ffc2de"/>
+
+      <path d="M150 40
+               C230 40 262 100 262 165
+               C262 250 225 320 150 320
+               C75 320 38 250 38 165
+               C38 100 70 40 150 40 Z" fill="url(#bodyGrad)"/>
+      <ellipse cx="100" cy="90" rx="30" ry="18" fill="#ffffff" opacity="0.18"/>
+
+      <ellipse cx="150" cy="152" rx="90" ry="80" fill="url(#bellyGrad)"/>
+
+      <ellipse cx="94" cy="168" rx="16" ry="10" fill="url(#cheekGrad)"/>
+      <ellipse cx="206" cy="168" rx="16" ry="10" fill="url(#cheekGrad)"/>
+
+      <ellipse cx="121" cy="128" rx="22" ry="26" fill="#ffffff" stroke="#20122f" stroke-width="3.5"/>
+      <ellipse cx="179" cy="128" rx="22" ry="26" fill="#ffffff" stroke="#20122f" stroke-width="3.5"/>
+      <circle cx="127" cy="134" r="8" fill="#20122f"/>
+      <circle cx="185" cy="134" r="8" fill="#20122f"/>
+      <circle cx="123" cy="128" r="3" fill="#ffffff"/>
+      <circle cx="181" cy="128" r="3" fill="#ffffff"/>
+      <circle cx="131" cy="139" r="1.6" fill="#ffffff" opacity="0.9"/>
+      <circle cx="189" cy="139" r="1.6" fill="#ffffff" opacity="0.9"/>
+      <path d="M101 108 q6 -8 16 -6" stroke="#20122f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M199 108 q-6 -8 -16 -6" stroke="#20122f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+      <ellipse cx="150" cy="150" rx="12" ry="10" fill="#ff9ecb" stroke="#20122f" stroke-width="2.5"/>
+      <ellipse cx="146" cy="147" rx="3" ry="2.2" fill="#fff" opacity="0.85"/>
+
+      <path d="M150 160 L150 172" stroke="#20122f" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M116 176 C130 196 170 196 184 176" stroke="#20122f" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+      <path d="M66 140 L22 132" stroke="#20122f" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M64 155 L18 155" stroke="#20122f" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M66 170 L22 178" stroke="#20122f" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M234 140 L278 132" stroke="#20122f" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M236 155 L282 155" stroke="#20122f" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M234 170 L278 178" stroke="#20122f" stroke-width="2.5" stroke-linecap="round"/>
+
+      <path d="M120 205 C120 195 138 195 150 202 C162 195 180 195 180 205 C180 214 162 210 150 216 C138 210 120 214 120 205 Z" fill="#ff6fb0" stroke="#20122f" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="150" cy="205" r="6" fill="#a855f7" stroke="#20122f" stroke-width="2"/>
+      <circle cx="150" cy="228" r="13" fill="#ffd76e" stroke="#20122f" stroke-width="2.5"/>
+      <circle cx="150" cy="233" r="2.2" fill="#20122f"/>
+      <path d="M140 228 h20" stroke="#20122f" stroke-width="2"/>
+
+      <g id="pocket">
+        <path d="M92 254 C92 240 208 240 208 254 L208 294 C208 308 92 308 92 294 Z" fill="#fdfdff" stroke="#20122f" stroke-width="3"/>
+        <path d="M92 254 C92 268 208 268 208 254" fill="none" stroke="#20122f" stroke-width="2.5"/>
+        <path d="M150 275 c-3 -4 -10 -2 -10 3 c0 5 10 10 10 10 c0 0 10 -5 10 -10 c0 -5 -7 -7 -10 -3 Z" fill="#ff9ecb" opacity="0.7"/>
+      </g>
+
+      <ellipse cx="52" cy="248" rx="19" ry="15" fill="url(#bodyGrad)"/>
+      <ellipse cx="248" cy="248" rx="19" ry="15" fill="url(#bodyGrad)"/>
+      <ellipse cx="52" cy="248" rx="10" ry="8" fill="#ffffff" opacity="0.9"/>
+      <ellipse cx="248" cy="248" rx="10" ry="8" fill="#ffffff" opacity="0.9"/>
+
+      <ellipse cx="104" cy="319" rx="27" ry="13" fill="#ffffff"/>
+      <ellipse cx="196" cy="319" rx="27" ry="13" fill="#ffffff"/>
+      <ellipse cx="104" cy="322" rx="14" ry="6" fill="#ffe1f0"/>
+      <ellipse cx="196" cy="322" rx="14" ry="6" fill="#ffe1f0"/>
+    </svg>
+
+    <div class="envelope-zone">
+      <div class="envelope" id="envelope">
+        <svg viewBox="0 0 150 100" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="10" width="142" height="86" rx="8"
+fill="#fffdf5"
+stroke="#d99a2b"
+stroke-width="3"/>
+
+<path
+d="M4 14 L75 62 L146 14"
+fill="none"
+stroke="#d99a2b"
+stroke-width="3"/>
+          <circle cx="75" cy="55" r="15" fill="#f59e0b"/>
+          <text
+x="75"
+y="60"
+text-anchor="middle"
+font-size="14"
+font-family="Baloo 2, cursive"
+fill="#ffffff"
+font-weight="700"
+id="envNum">1</text>
+        <div class="open-hint">tap to open ✨</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tap-hint" id="tapHint">👆 Tap the pocket to pull out letter #1</div>
+</section>
+
+<!-- SCREEN 3: FINAL -->
+<section class="screen" id="screen-final">
+  <div class="eyebrow">That's all 20 <span class="heart">💜</span></div>
+  <p class="final-msg">Every letter in that pocket was just an excuse to make you smile. Hope your 20th year is loaded with cake, chaos, and a whole lot of happiness. 🎂✨</p>
+
+  <div class="revisit">
+    <h3>Read any letter again</h3>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <div class="note"></div>
+</section>
+
+<div class="letter-overlay" id="letterOverlay">
+  <div class="letter-card">
+    <div class="tag" id="letterTag">LETTER 01</div>
+    <div class="msg" id="letterMsg"></div>
+    <button class="close-btn" id="closeBtn">Tuck it back in 💌</button>
+  </div>
+</div>
+
+<script>
+  const messages = [
+    "Happy Birthday Hrishita! Officially 20 now — teenage drama retired, adulting excuses activated 😄",
+    "You know what's funny? Birthdays come once a year, but people like you are rare enough that one lifetime is lucky to have even one.🥹",
+    "I hope this year gives you more reasons to laugh than to overthink.🌸",
+    "Your smile hits different, like finding free WiFi with full signal 📶",
+    "Some people leave memories. You somehow leave comfort.✨",
+    "I was going to buy you the moon... then I checked my bank balance. 🌙💸",
+    "Happy Birthday! May your Wi-Fi stay connected and your charger always be within reach. 📶",
+    "Make any wish you want, just leave a tiny corner in it for me 🥲",
+    "I was going to write something emotional... then I remembered you'd probably laugh at me. 😭😂",
+    "20 means the 'I'm still a baby' excuse officially expires today 😆",
+    "Fun fact: Scientists still haven't figured out how someone can be this dramatic and this cute at the same time. 🤨",
+    "If Doraemon were here, he'd probably say, 'Even my gadgets can't make someone cooler than Hrishita.' 💙",
+    "I hope someone always reminds you how amazing you are... especially on the days you forget.🍩",
+    "I secretly hope that every time you remember this birthday, it makes you smile.💓",
+    "I was going to roast you... but it's your birthday. I'll resume tomorrow.",
+    "Error 404: Mature behaviour not found. 😌",
+    "20 now, stop saying 'I don't need anything' and send the gift list already 📝",
+    "Your laugh is so contagious even doctors can't cure it, and honestly, I don't want them to 😌",
+    "Please smile today... otherwise this entire website becomes a waste of my unpaid labour. 😭",
+    "Congratulations! 🎉 You unlocked all 20 letters. Your reward: One lifetime supply of birthday wishes... and one extremely proud website developer who hopes you smiled while reading these. 🥹💕"
+  ];
+
+  let nextIndex = 0;
+  const total = messages.length;
+
+  const screenHero = document.getElementById('screen-hero');
+  const screenLetters = document.getElementById('screen-letters');
+  const screenFinal = document.getElementById('screen-final');
+  const continueBtn = document.getElementById('continueBtn');
+
+  const botSvg = document.getElementById('botSvg');
+  const envelope = document.getElementById('envelope');
+  const envNum = document.getElementById('envNum');
+  const tapHint = document.getElementById('tapHint');
+  const countNum = document.getElementById('countNum');
+  const letterOverlay = document.getElementById('letterOverlay');
+  const letterTag = document.getElementById('letterTag');
+  const letterMsg = document.getElementById('letterMsg');
+  const closeBtn = document.getElementById('closeBtn');
+  const dotsWrap = document.getElementById('dots');
+
+let envelopeOut = false;
+const music = document.getElementById("bgMusic");
+
+continueBtn.addEventListener('click', () => {
+    screenHero.classList.remove('active');
+    screenLetters.classList.add('active');
+
+    music.play().catch((err) => {
+        console.log(err);
+    });
+});
+  function updateHint(){
+    if(nextIndex < total){
+      tapHint.textContent = envelopeOut
+        ? `Tap the letter to open #${nextIndex+1}`
+        : `👆 Tap the pocket to pull out letter #${nextIndex+1}`;
+    }
+    countNum.textContent = total - nextIndex;
+  }
+  updateHint();
+
+  botSvg.addEventListener('click', () => {
+    if(envelopeOut) return;
+    if(nextIndex >= total) return;
+    botSvg.classList.remove('shake');
+    void botSvg.offsetWidth;
+    botSvg.classList.add('shake');
+    envNum.textContent = nextIndex + 1;
+    envelope.classList.add('show');
+    envelopeOut = true;
+    updateHint();
+  });
+
+  envelope.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if(!envelopeOut) return;
+    openLetter(nextIndex);
+  });
+
+  function openLetter(idx){
+    letterTag.textContent = `LETTER ${String(idx+1).padStart(2,'0')}`;
+    letterMsg.textContent = messages[idx];
+    letterOverlay.classList.add('active');
+  }
+
+  closeBtn.addEventListener('click', () => {
+    letterOverlay.classList.remove('active');
+    envelope.classList.remove('show');
+    envelopeOut = false;
+    nextIndex++;
+    updateHint();
+    if(nextIndex >= total){
+      buildDots();
+      setTimeout(() => {
+        screenLetters.classList.remove('active');
+        screenFinal.classList.add('active');
+        launchConfetti();
+      }, 350);
+    }
+  });
+
+  function buildDots(){
+    dotsWrap.innerHTML = '';
+    for(let i=0;i<total;i++){
+      const d = document.createElement('div');
+      d.className = 'dot unlocked';
+      d.textContent = i+1;
+      d.addEventListener('click', () => openLetter(i));
+      dotsWrap.appendChild(d);
+    }
+  }
+
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+  let particles = [];
+  const colors = ['#ff6fb0','#a855f7','#ffd76e','#ff2e8f','#7c3aed','#fff'];
+  function launchConfetti(){
+    for(let i=0;i<160;i++){
+      particles.push({
+        x: canvas.width/2 + (Math.random()-0.5)*220,
+        y: canvas.height*0.3,
+        vx: (Math.random()-0.5)*8,
+        vy: Math.random()*-8-4,
+        size: Math.random()*8+4,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        rot: Math.random()*360,
+        vr: (Math.random()-0.5)*10,
+        gravity: 0.25
+      });
+    }
+  }
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.vy += p.gravity; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+      ctx.restore();
+    });
+    particles = particles.filter(p => p.y < canvas.height + 50);
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+
+</script>
+
+
+</body>
+</html>
